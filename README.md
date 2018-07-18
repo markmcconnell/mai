@@ -6,6 +6,11 @@ An interface between JACK (jack-audio-connection-kit) and AES67 network audio se
 
 The program currently compiles on most linux distributions with a standard GCC compiler.  Simply run 'make all'.
 
+### Prerequisites
+
+* JACK (jack-audio-connection-kit)
+* libsamplerate 
+
 ### Beta Software
 
 This is a beta version.  Although the software functions fairly well and has had moderate testing with itself on 
