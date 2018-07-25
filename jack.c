@@ -191,9 +191,9 @@ int mai_jack_init(void) {
 	const char *pair = mai.args.ports;
 	
 	for (uint32_t ch=0; pair && *pair && (ch < mai.args.channels); ch++) {
-		char *end = strchrnul(pair, ',');		// get separation char or ptr to '0'
+		char *end = strchrnul(pair, ',');		// get separation char or ptr to '\0'
 
-		if (*end) *end++ = 0;				// if separator, change to '0' and advance ptr
+		if (*end) *end++ = 0;				// if separator, change to '\0' and advance ptr
 		
 		if (pair[0] && (pair[0] != '-')) {
 			int rc;
@@ -205,9 +205,8 @@ int mai_jack_init(void) {
 				mai_error("failed to connect %s to specified port %s!\n", jack_name[ch], pair);
 				
 			mai_debug("Connected: %s <-> %s\n", jack_name[ch], pair);
-				
 		}
-		pair = end;					// point to next pair or '0'
+		pair = end;					// point to next pair or '\0'
 	}
 
 	return(mai_debug("Started: %s (%d channels)\n", mai.args.client, mai.args.channels));

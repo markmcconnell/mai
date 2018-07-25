@@ -1,10 +1,7 @@
 #ifndef __MAI_H
 #define __MAI_H
 
-// MAI is provided under the "3-clause" BSD License terms,  which are included
-// with the source distribution in the LICENSE file,  or on the internet at
-// https://opensource.org/licenses/BSD-3-Clause
-#define MAI_COPYRIGHT "Copyright 2018 Mark Anthony McConnell <msg-mai@markmcconnell.us>. All rights reserved."
+#include "version.h"
 
 #define _DEFAULT_SOURCE
 #define _GNU_SOURCE

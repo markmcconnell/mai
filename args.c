@@ -13,8 +13,8 @@ static int usage(const char *fmt, ...) {
 		fprintf(stderr, "\n\n");
 	}
 
-	fprintf(stderr, "" MAI_COPYRIGHT "\n\n");
-	fprintf(stderr, "usage: mai <args>\n\n");
+	
+	fprintf(stderr, "Usage: mai <args>\n\n");
 	
 	fprintf(stderr, "-m,--mode      <send|recv>           AES67 sender or receiver  - REQUIRED\n");
 	fprintf(stderr, "-a,--address   <ip>[:<port=5004>]    AES67 multicast address   - REQUIRED\n");
@@ -34,6 +34,7 @@ static int usage(const char *fmt, ...) {
 	fprintf(stderr, "-u,--user      <userid>              drop privileges to userid\n");
 	fprintf(stderr, "-g,--group     <groupid>             drop privileges to group\n\n");
 	
+	fprintf(stderr, "-V,--version                         Show Version and Copyright\n");
 	fprintf(stderr, "-v,--verbose                         Verbose Debugging Output\n");
 	fprintf(stderr, "-h,--help                            Show this Help Screen\n\n");
 	
@@ -70,6 +71,7 @@ void mai_args_init(int argc, char *argv[]) {
 		{ "user",	required_argument,	0, 'u'	},
 		{ "group",	required_argument,	0, 'g' 	},
 		
+		{ "version",	no_argument,		0, 'V'	},
 		{ "verbose",	no_argument,		0, 'v'  },
 		{ "help",	no_argument,		0, 'h'  },
 		{ NULL,		0,			0, 0	}
@@ -77,7 +79,7 @@ void mai_args_init(int argc, char *argv[]) {
 
 	char *ptr;
 	
-	for (int ch; (ch = getopt_long(argc, argv, ":m:a:i:s:t:b:r:c:p:l:o:u:g:vh", options, NULL)) != -1; ) { switch (ch) {
+	for (int ch; (ch = getopt_long(argc, argv, ":m:a:i:s:t:b:r:c:p:l:o:u:g:Vvh", options, NULL)) != -1; ) { switch (ch) {
 		case 'm':
 			     if (optarg[0] == 's') mai.args.mode = 's';
 			else if (optarg[0] == 'r') mai.args.mode = 'r';
@@ -99,6 +101,13 @@ void mai_args_init(int argc, char *argv[]) {
 		case 'g': mai.args.gid	   = atoi(optarg); 			break;
 		case 'v': mai.args.verbose = 1;	    				break;
 		case 'h': usage(NULL);						break;
+		
+		case 'V': 
+			fprintf(stderr, 
+				"MAI: Mark's AES67 Implementation. Version %s.\n\n%s\n\n%s\n\n%s\n", 
+				MAI_VERSION, MAI_COPYRIGHT, MAI_LICENSE, MAI_DISCLAIMER
+			);
+			exit(0);
 		
 		case 'r':
 			mai.args.rate = atoi(optarg);
