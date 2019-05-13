@@ -1,0 +1,13 @@
+ptp:
+	a mechanism to time ptp delay requests based upon the RTP clock
+	instability.  more unstable == more requests,  more stable == 
+	less requests.
+	
+audio:
+	a mechanism to monitor the depth of buffered audio and to 
+	reduce the buffer by sample slipping when the buffer gets
+	above a certain threshold.
+	
+	the same logic _might_ be applied to the read buffer in order
+	to fill in some samples and to smooth buffer-jumps associated
+	with network jitter.

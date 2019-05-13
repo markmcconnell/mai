@@ -89,13 +89,13 @@ static int jack_recv(jack_nframes_t frames, void *arg __attribute__((__unused__)
 			
 		const float * const end = output + frames;
 			
-		if (bias == 1) {					// too slow: drop a sample to frame
+		if (bias == 1) {					// too slow: drop a sample from frame
 			*output  = (input[0] + input[channels])/2;	// output[0] = avg(deinterleave(input[0..1]))
 			 output += 1;
 			
 			input += (channels * 2);			// make output[1] = input[2], ...
 			
-		} else if (bias == -1) {				// too fast: add a sample from frame
+		} else if (bias == -1) {				// too fast: add a sample to frame
 			*output  = input[0];				// make output[0] = input[1], ...
 			 output += 1;
 			 

@@ -22,17 +22,17 @@ static char		ptp_source[32];		// PTP master source (decoded/text)
 
 static int 		ptp_sock  = -1;		// port 319: event messages
 static uint64_t		ptp_rate  =  0;		// audio system sample rate
-static uint64_t         ptp_recv  = 0;   	// PTP SYNC Receiver  Timestamp (T'1)
-static uint64_t         ptp_sync  = 0;   	// PTP SYNC Sender    Timestamp (T1)
+static uint64_t         ptp_recv  =  0;   	// PTP SYNC Receiver  Timestamp (T'1)
+static uint64_t         ptp_sync  =  0;   	// PTP SYNC Sender    Timestamp (T1)
 
 static int		gen_sock  = -1;		// port 320: general messages
-static uint16_t	 	clk_seq   = 0;		// PTP Two Phase SYNC Sequence
-static uint64_t	 	clk_recv  = 0;		// PTP Two Phase SYNC Received
+static uint16_t	 	clk_seq   =  0;		// PTP Two Phase SYNC Sequence
+static uint64_t	 	clk_recv  =  0;		// PTP Two Phase SYNC Received
 
 static int		req_sock  = -1;		// socket for sending messages
-static uint16_t 	req_seq   = 0;		// request message sequence
-static uint64_t		req_sent  = 0;		// PTP DELAY Sender   Timestamp (T2)
-static uint64_t		req_sync  = 0;		// PTP DELAY Receiver Timestamp (T'2)
+static uint16_t 	req_seq   =  0;		// request message sequence
+static uint64_t		req_sent  =  0;		// PTP DELAY Sender   Timestamp (T2)
+static uint64_t		req_sync  =  0;		// PTP DELAY Receiver Timestamp (T'2)
 
 /* ######################################################################## */
 static uint64_t ptp_stamp(uint8_t *in) {
@@ -201,7 +201,7 @@ int mai_ptp_init(void) {
 }
 
 int mai_ptp_start(void) {
-	// kick of ptp general messages thread
+	// kick off ptp general messages thread
 	if (pthread_create(&gen_tid, NULL, ptp_general, NULL))
 		return(mai_error("could not start general thread: %m\n"));
 
