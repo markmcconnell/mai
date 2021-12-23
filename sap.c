@@ -38,11 +38,11 @@ void *sap(void *arg) {
 	char *ptime;
 	
 	switch (mai.args.ptime) {
-		case 4000: ptime = (mai.args.rate == 44100) ? "4.35" : "4";
-		case 1000: ptime = (mai.args.rate == 44100) ? "1.09" : "1";
-		case  333: ptime = (mai.args.rate == 44100) ? "0.36" : "0.33";
-		case  250: ptime = (mai.args.rate == 44100) ? "0.27" : "0.25";
-		case  125: ptime = (mai.args.rate == 44100) ? "0.13" : "0.12";
+		case 4000: ptime = (mai.args.rate == 44100) ? "4.35" : "4"; 	break;
+		case 1000: ptime = (mai.args.rate == 44100) ? "1.09" : "1"; 	break;
+		case  333: ptime = (mai.args.rate == 44100) ? "0.36" : "0.33"; 	break;
+		case  250: ptime = (mai.args.rate == 44100) ? "0.27" : "0.25"; 	break;
+		case  125: ptime = (mai.args.rate == 44100) ? "0.13" : "0.12"; 	break;
 	}
 	
 	payload += sprintf(payload, "v=0\r\n");

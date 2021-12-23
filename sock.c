@@ -1,11 +1,11 @@
 #include "mai.h"
 
 /* ######################################################################## */
-const char		*if_name;		// multicast interface name
-const uint8_t		 if_local[10];		// multicast interface l2 address
-unsigned int		 if_mtu;		// multicast interface mtu
-int			 if_index;		// multicast interface index
-struct in_addr		 if_addr;		// multicast interface address
+static const char		*if_name;		// multicast interface name
+static uint8_t		 	 if_local[10];		// multicast interface l2 address
+static unsigned int		 if_mtu;		// multicast interface mtu
+static int			 if_index;		// multicast interface index
+static struct in_addr		 if_addr;		// multicast interface address
 
 /* ######################################################################## */
 static inline int setsockopt_i(int sk, int level, int name, int value) {
@@ -97,14 +97,14 @@ int mai_sock_open(int mode, const char *ip, const uint16_t port) {
 int mai_sock_if_set(const char *name) {
 	if (!name || !name[0])
 		return(0);
-		
+
 	if ((if_name = strdup(name)) == NULL)
 		return(mai_error("strdup: %m\n"));
 		
 	int sk;
 	if ((sk = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
 		return(mai_error("socket: %m\n"));
-		
+
 	// setup interface request 
 	struct ifreq ifr;
 	
@@ -116,7 +116,7 @@ int mai_sock_if_set(const char *name) {
 		return(mai_error("get interface mtu (%s): %m\n", if_name));
 		
 	if_mtu = ifr.ifr_mtu;
-	
+
 	// ask for interface index
 	if (ioctl(sk, SIOCGIFINDEX, &ifr))
 		return(mai_error("get interface index (%s): %m\n", if_name));
@@ -128,29 +128,29 @@ int mai_sock_if_set(const char *name) {
 	
 	if (ioctl(sk, SIOCGIFADDR, &ifr))
 		return(mai_error("get interface address (%s): %m\n", if_name));
-		
+
 	if_addr = ((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr;
 	
 	// ask for layer2 address
 	if (ioctl(sk, SIOCGIFHWADDR, &ifr))
 		return(mai_error("get interface hardware address (%s): %m\n", if_name));
-		
-	uint8_t *out = (uint8_t *)if_local;
+
+	uint8_t *out = &if_local[0];
 		
 	*out++ = ifr.ifr_hwaddr.sa_data[0];
 	*out++ = ifr.ifr_hwaddr.sa_data[1];
 	*out++ = ifr.ifr_hwaddr.sa_data[2];
-	
+
 	*out++ = 0xFF;
 	*out++ = 0xFE;
-	
+
 	*out++ = ifr.ifr_hwaddr.sa_data[3];
 	*out++ = ifr.ifr_hwaddr.sa_data[4];
 	*out++ = ifr.ifr_hwaddr.sa_data[5];
-	
+
 	*out++ = 0x00;
 	*out++ = 0x02;
-		
+
 	close(sk);
 	return(0);
 }

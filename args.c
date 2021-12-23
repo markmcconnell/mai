@@ -112,7 +112,7 @@ void mai_args_init(int argc, char *argv[]) {
 		case 'r':
 			mai.args.rate = atoi(optarg);
 			if ((mai.args.rate != 44100) && (mai.args.rate != 48000) && (mai.args.rate != 96000))
-				usage("ERROR: 'rate' argument must be 44100,48000 or 96000 (got: %d)", mai.args.rate);
+				usage("ERROR: 'rate' argument must be 44100, 48000 or 96000 (got: %d)", mai.args.rate);
 				
 			break;
 		
