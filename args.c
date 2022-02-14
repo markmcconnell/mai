@@ -153,7 +153,6 @@ void mai_args_init(int argc, char *argv[]) {
 				mai.args.port = 5004;
 			}
 			
-			mai.args.addr = optarg;
 			break;
 			
 		case ':':
